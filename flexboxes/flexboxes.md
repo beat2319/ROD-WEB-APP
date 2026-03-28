@@ -1,11 +1,11 @@
-![[ROD-Web-App-Wireframe.png]]
+![ROD-Web-App-Wireframe](ROD-Web-App-Wireframe.png)
 ### Covariate Flexbox
 ```css
 flex-direction: column
 justify-content: center
 align-items: stretch
 ```
-- ![[Covariate-Flexbox.png]]
+- ![Covariate-Flexbox](Covariate-Flexbox.png)
 #### Beetle Flexbox
 ```css
 .flex-row-container {
@@ -20,7 +20,7 @@ align-items: stretch
 	flex-shrink: 0; /* Keep this for SVGs as noted in your guide */ 
 }
 ```
-- ![[Beetle-Flexbox.png]]
+- ![Beetle-Flexbox](Beetle-Flexbox.png)
 #### Ungulate Flexbox
 ```css
 .covariate-container {
@@ -33,4 +33,4 @@ align-items: stretch
 .spacer-section   { flex: 0 0 5%;  }
 .ungulate-section { flex: 0 0 60%; }
 ```
-- ![[Ungulate-Flexbox.png]]
+- ![Ungulate-Flexbox](Ungulate-Flexbox.png)
