@@ -13,23 +13,22 @@
     body, html {
         margin: 0;
         padding: 0;
-        min-height: 100%; /* Better for overflow */
+        height: 100vh; 
         background-color: #DEC79F; 
         font-family: 'EB Garamond', serif;
         color: #2c2c2c;
+        
     }
 
     .dashboard {
         display: grid;
         width: 100vw;  
-        min-height: 100vh; /* Changed from height to min-height */
+        height: 100vh; /* Changed from height to min-height */
 
+        column-gap: 2rem; 
         /* Removed the 60fr gutter, using gap instead */
         grid-template-columns: 516fr 1224fr;
         grid-template-rows: 836fr 184fr;
-        
-        /* Replaces the manual gutter column */
-        column-gap: 2rem; 
         
         grid-template-areas: 
             "sidebar map"
@@ -44,6 +43,7 @@
         align-items: stretch;
         padding: 0; 
         overflow: hidden;
+        min-height: 0;
     }
 
     /* Beetle Section */
@@ -54,6 +54,7 @@
         justify-content: center;
         align-items: stretch;
         padding: 1.5rem; /* Changed from 20pt */
+        min-height: 0; 
     }
 
     .beetle-image {
@@ -87,16 +88,11 @@
 
     /* Ungulate Section */
     .ungulate-section {
-        flex: 65; 
+        flex: 59; 
         display: flex;
         flex-direction: column; 
         padding: 1.5rem; /* Changed from 20pt */
-    }
-
-    .ungulate-graphics-container {
-        display: flex;
-        flex-direction: row; 
-        flex: 80; 
+        min-height: 0; 
     }
 
     .ungulate-header-text {
@@ -109,6 +105,46 @@
     .ungulate-header-text p {
         font-size: 0.85rem; /* Adjust this value up or down as needed */
         line-height: 1.4;   /* Keeps the smaller text readable */
+    }
+
+    .ungulate-graphics-container {
+        display: flex;
+        flex-direction: row; 
+        flex: 80; 
+        min-height: 0; 
+    }
+
+/* 50% width, uses flexbox to push images to the top and bottom */
+    .left-grid {
+        flex: 1 1 50%; 
+        display: flex;                  /* Changed from grid to flex */
+        flex-direction: column;         /* Stacks vertically */
+        justify-content: space-between; /* Pushes the first image top, second image bottom */
+        padding-right: 10px;            /* Breathing room between the columns */
+    }
+
+    /* 50% width, sets up a vertical grid for 3 images */
+    .right-grid {
+        flex: 1 1 50%; 
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between; /* Places images at top, middle, and bottom */
+    }
+
+    /* Left grid images: set height to auto so they don't artificially stretch */
+    .left-grid img {
+        width: 100%;       
+        height: auto;      
+        max-height: 48%;   /* Prevents them from growing too large and overlapping */
+        object-fit: contain; 
+    }
+
+    /* Right grid images: set max-height to a third of the container */
+    .right-grid img {
+        width: 100%;       
+        height: auto;      
+        max-height: 32%;   /* Prevents the 3 images from overlapping */
+        object-fit: contain; 
     }
 
     .flex-half {
@@ -168,7 +204,7 @@
     <aside class="sidebar">
         <article class="beetle-section">
             <div class="flex-half beetle-image">
-                <img src="./svg/beetle.svg">
+                <img src="./attachments/svg/beetle.svg">
             </div>
             <div class="flex-half beetle-text">
                 <p>Wood boring ambrosia beetles play a central role in the spread of Ceratocystis wilt of
@@ -181,10 +217,15 @@
                 <p>The spatial patterns of ʻōhiʻa mortality observed across all four sites included in the study show significant differences in areas with and without ungulates, suggesting that ungulate exclusion is an effective management tool to lessen the impacts of ROD in forested areas in Hawaiʻi. [2]</p>
             </div>
             <div class="ungulate-graphics-container">
-                <div class="flex-half ungulate-main-img">
-                    </div>
-                <div class="flex-half ungulate-grid">
-                    </div>
+                <div class="left-grid">
+                    <img src="./attachments/svg/ungulates/capra_hircus.svg" alt="Capra hircus (Goat)">
+                    <img src="./attachments/svg/ungulates/sus_scrofa.svg" alt="Sus scrofa (Wild Boar)">
+                </div>
+                <div class="right-grid">
+                    <img src="./attachments/svg/ungulates/bos_tarus.svg" alt="Bos taurus (Cattle)">
+                    <img src="./attachments/svg/ungulates/ovis_aries.svg" alt="Ovis aries (Sheep)">
+                    <img src="./attachments/svg/ungulates/ovis_gmelini_musimon.svg" alt="Ovis gmelini musimon (Mouflon)">
+                </div>
             </div>
         </article>
     </aside>
