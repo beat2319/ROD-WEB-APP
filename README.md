@@ -4,7 +4,7 @@ This is a website to host model inference of ROD detections.
 
 ### [rapidohiadeath.com](https://www.rapidohiadeath.com) coming soon!
 
-- ![website](ROD-Web-App.png)
+- ![website](./attachments/png/ROD-Web-App.png)
 
 ### Current Comments:
 
