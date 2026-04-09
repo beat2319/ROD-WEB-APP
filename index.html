@@ -23,12 +23,10 @@
     .dashboard {
         display: grid;
         width: 100vw;  
-        height: 100vh; /* Changed from height to min-height */
-
-        column-gap: 2rem; 
-        /* Removed the 60fr gutter, using gap instead */
-        grid-template-columns: 516fr 1224fr;
-        grid-template-rows: 836fr 184fr;
+        height: 100vh; 
+        column-gap: clamp(1rem, 2vw, 3rem); 
+        grid-template-columns: 1fr 2.37fr;
+        grid-template-rows: 5.1fr 1fr;
         
         grid-template-areas: 
             "sidebar map"
@@ -46,14 +44,13 @@
         min-height: 0;
     }
 
-    /* Beetle Section */
     .beetle-section {
         flex: 35;
         display: flex;
         flex-direction: row; 
         justify-content: center;
         align-items: stretch;
-        padding: 1.5rem; /* Changed from 20pt */
+        padding: clamp(1rem, 2vw, 2rem); 
         min-height: 0; 
     }
 
@@ -61,14 +58,15 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        height: 100%; 
+        height: 90%;
+        width: 100%; 
+        align-self: center;
     }
 
     .beetle-image img {
-        width: 100%;       
-        height: 100%;      
-        object-fit: contain; 
-        flex-shrink: 0;    
+        max-width: 100%; 
+        max-height: 100%; 
+        object-fit: contain;  
     } 
 
     .beetle-text {
@@ -79,19 +77,15 @@
     }
 
     .beetle-text p {
-        font-size: 0.85rem; /* Adjust this value up or down as needed */
-        line-height: 1.4;   /* Keeps the smaller text readable */
+        font-size: 1.05vw; 
+        line-height: 1.4;  
     }
 
-    /* Red Divider */
-
-
-    /* Ungulate Section */
     .ungulate-section {
         flex: 59; 
         display: flex;
         flex-direction: column; 
-        padding: 1.5rem; /* Changed from 20pt */
+        padding: clamp(1rem, 2vw, 2rem); 
         min-height: 0; 
     }
 
@@ -103,8 +97,8 @@
     }
 
     .ungulate-header-text p {
-        font-size: 0.85rem; /* Adjust this value up or down as needed */
-        line-height: 1.4;   /* Keeps the smaller text readable */
+        font-size: 1.05vw;   
+        line-height: 1.4;   
     }
 
     .ungulate-graphics-container {
@@ -114,57 +108,52 @@
         min-height: 0; 
     }
 
-/* 50% width, uses flexbox to push images to the top and bottom */
     .left-grid {
         flex: 1 1 50%; 
-        display: flex;                  /* Changed from grid to flex */
-        flex-direction: column;         /* Stacks vertically */
-        justify-content: space-between; /* Pushes the first image top, second image bottom */
-        padding-right: 10px;            /* Breathing room between the columns */
+        display: flex;                  
+        flex-direction: column;         
+        justify-content: space-between; 
+        padding-right: clamp(5px, 1vw, 15px);            
     }
 
-    /* 50% width, sets up a vertical grid for 3 images */
     .right-grid {
         flex: 1 1 50%; 
         display: flex;
         flex-direction: column;
-        justify-content: space-between; /* Places images at top, middle, and bottom */
+        justify-content: space-between; 
     }
 
-    /* Left grid images: set height to auto so they don't artificially stretch */
     .left-grid img {
         width: 100%;       
         height: auto;      
-        max-height: 48%;   /* Prevents them from growing too large and overlapping */
+        max-height: 48%;   
         object-fit: contain; 
     }
 
-    /* Right grid images: set max-height to a third of the container */
     .right-grid img {
         width: 100%;       
         height: auto;      
-        max-height: 32%;   /* Prevents the 3 images from overlapping */
+        max-height: 32%;  
         object-fit: contain; 
     }
 
     .flex-half {
         flex: 1 1 50%; 
-        flex-shrink: 0; 
+        min-width: 0; 
+        min-height: 0; 
     }
 
     .ungulate-grid {
         display: grid;
         grid-template-columns: 1fr 1fr;
         grid-template-rows: 1fr 1fr;
-        gap: 10px;
+        gap: clamp(5px, 1vw, 15px);
     }
 
-    /* MAP AREA */
     .map-section {
         grid-area: map;
         position: relative;
-        /* Adjusted padding to use rem and account for the new column-gap */
-        padding: 2rem 2rem 1rem 0; 
+        padding: clamp(1.5rem, 3vh, 3rem) clamp(1.5rem, 3vw, 3rem) clamp(0.75rem, 1.5vh, 1.5rem) 0; 
     }
 
     #map-container {
@@ -177,22 +166,51 @@
 
     .footer {
         grid-area: footer;
-        padding: 1rem 2rem 2rem 0; /* Changed from pt */
+        padding: clamp(0.75rem, 1.5vh, 1.5rem) clamp(1.5rem, 3vw, 3rem) clamp(1.5rem, 3vh, 3rem) 0; 
         display: flex;
-        align-items: center;
-        gap: 2rem; /* Changed from 30pt */
-        border-top: 1px dashed rgba(0,0,0,0.2);
+        flex-direction: row;
+        justify-content: space-between; 
+        align-items: center; 
+        gap: clamp(1rem, 2vw, 3rem); 
     }
 
     .footer-text {
-        flex: 1;
-        font-size: 1rem; /* Adjusted for standard web sizing */
-        line-height: 1.6;
+        flex: 1; 
+        text-align: center; 
     }
 
-    .footer-img {
-        height: 7rem; /* Changed from 100pt */
-        width: auto;
+    .footer-text p {
+        font-size: 1.05vw; 
+        line-height: 1.4;   
+        margin: 0; 
+    }
+
+    .footer-img-left {
+        height: 8vw; 
+        flex-shrink: 0; 
+        display: flex;
+        justify-content: flex-start; 
+        align-items: center;
+    }
+
+    .footer-img-left img {
+        height: 100%;
+        width: auto; 
+        object-fit: contain; 
+    }
+
+    .footer-img-right {
+        height: 7vw; 
+        flex-shrink: 0; 
+        display: flex;
+        justify-content: flex-end; 
+        align-items: center;
+    }
+
+    .footer-img-right img {
+        height: 100%;
+        width: auto; 
+        object-fit: contain; 
     }
 
     </style>
@@ -235,8 +253,19 @@
             </div>
         </main>
 
-        <footer class="footer">
-        </footer>
+    <footer class="footer">
+        <div class="footer-img-left">
+            <img src="./attachments/svg/ohia_forest.svg" alt="Left Image Placeholder">
+        </div>
+
+        <div class="footer-text">
+            <p>‘Ōhi‘a forests cover 865,000 acres across the State of Hawai‘i, and ‘ōhi‘a trees are responsible for roughly two-thirds of the forest canopy cover on Hawai‘i Island. ‘Ōhi‘a is foundational to the native forests of Hawai‘i, growing from sea level to the high-elevation tree line, on barren lava flows and in dry-desert-like settings, mesic savanna woodlands, wet forests, and dwarf-forest bogs. [3]</p>
+        </div>
+
+        <div class="footer-img-right">
+            <img src="./attachments/svg/ohia_branch.svg" alt="Right Image Placeholder">
+        </div>
+    </footer>
 
     </div>
 
