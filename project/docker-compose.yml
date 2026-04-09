@@ -1,0 +1,52 @@
+version: "3.9"
+
+services:
+
+  db:
+    image: postgis/postgis:15-3.3
+    environment:
+      POSTGRES_DB: rod
+      POSTGRES_USER: rod
+      POSTGRES_PASSWORD: rod
+    volumes:
+      - ./db/schema.sql:/docker-entrypoint-initdb.d/schema.sql
+    networks:
+      - backend
+
+  worker:
+    build: ./worker
+    command: uvicorn main:app --host 0.0.0.0 --port 8001 --reload
+    ports:
+      - "8001:8001"
+    environment:
+      DATABASE_URL: postgresql://rod:rod@db:5432/rod
+      GOOGLE_APPLICATION_CREDENTIALS: /secrets/gcs-key.json
+    volumes:
+      - ${GCS_KEY_PATH:-./secrets/gcs-key.json}:/secrets/gcs-key.json:ro
+    depends_on:
+      - db
+    networks:
+      - backend
+
+  listener:
+    build: ./listener
+    command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+    ports:
+      - "8000:8000"
+    environment:
+      DATABASE_URL: postgresql://rod:rod@db:5432/rod
+    depends_on:
+      - db
+    networks:
+      - backend
+
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    command: tunnel --no-autoupdate run --token ${TUNNEL_TOKEN}
+    depends_on:
+      - listener
+    networks:
+      - backend
+
+networks:
+  backend:
