@@ -21,7 +21,7 @@ def _ingest_rod(cur, features: list) -> int:
             %(objectid)s, %(created_date)s, %(feature_user_id)s, %(region_id)s, %(host)s,
             %(dca)s, %(damage_type)s, %(percent_affected)s, %(collection_mode)s, %(area_type)s,
             %(photos)s, %(acres)s, %(number_of_trees)s, %(island)s, %(year)s,
-            ST_GeomFromGeoJSON(%(geom)s)
+            ST_Multi(ST_GeomFromGeoJSON(%(geom)s)) -- <-- Add ST_Multi() here
         )
     """
     rows = []

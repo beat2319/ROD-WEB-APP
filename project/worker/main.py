@@ -1,3 +1,4 @@
+from typing import Dict, Any
 import json
 from google.cloud import storage
 from fastapi import FastAPI, HTTPException
@@ -25,4 +26,13 @@ def receive_webhook(payload: WebhookPayload):
 
     geojson = json.loads(blob.download_as_text())
     count = ingest_geojson(geojson, payload.layer)
+    return {"status": "ok", "features_ingested": count}
+
+@app.post("/upload-local")
+def upload_local(layer: str, geojson: Dict[Any, Any]):
+    """Bypass Google Cloud and ingest a local GeoJSON payload directly."""
+    if layer not in ["rod", "coastline"]:
+        raise HTTPException(status_code=400, detail="Layer must be 'rod' or 'coastline'")
+        
+    count = ingest_geojson(geojson, layer)
     return {"status": "ok", "features_ingested": count}
