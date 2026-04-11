@@ -24,4 +24,4 @@ This is a website to host model inference of ROD detections.
 - Clarity -  you'll want to add some sort of legend that shows ohia forest vs predicted detections.  Also, I'm concerned about your #2 diagrams.  You have 3 photos of sheep, 1 cow, and 1 pig lazily resting.  In reality, pigs are by far the most impactful spreader and damage causer.  Cows cause the most terrible damage to a given forest, but those areas are not widespread.  And sheep are less of a factor overall, given their occurrence at higher elevations where ROD detections are significantly less.
 - Engagement - What is your overall purpose with this.  It looks like it will provide important information, but highlighting what actions people can take may make this more engaging."
 ##### Before
- - ![before_design](./attachments/png/ROD-Web-App.png)
+- ![before_design](./attachments/png/ROD-Web-App-CB.png)
