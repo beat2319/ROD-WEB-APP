@@ -11,7 +11,6 @@ def _get_conn():
 
 
 def _ingest_rod(cur, features: list) -> int:
-    """Insert ROD observation features into the rod_observations table."""
     sql = """
         INSERT INTO rod_observations (
             objectid, created_date, feature_user_id, region_id, host,
@@ -21,7 +20,7 @@ def _ingest_rod(cur, features: list) -> int:
             %(objectid)s, %(created_date)s, %(feature_user_id)s, %(region_id)s, %(host)s,
             %(dca)s, %(damage_type)s, %(percent_affected)s, %(collection_mode)s, %(area_type)s,
             %(photos)s, %(acres)s, %(number_of_trees)s, %(island)s, %(year)s,
-            ST_GeomFromGeoJSON(%(geom)s)
+            ST_Transform(ST_SetSRID(ST_Multi(ST_GeomFromGeoJSON(%(geom)s)), 32604), 4326)
         )
     """
     rows = []

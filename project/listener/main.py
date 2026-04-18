@@ -10,10 +10,11 @@ app = FastAPI(title="ROD Listener")
 # Allow the MapBox frontend to call this API from the browser
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=["https://rapidohiadeath.com", "http://localhost:3000"], 
     allow_methods=["GET"],
     allow_headers=["*"],
 )
+
 DATABASE_URL = os.environ["DATABASE_URL"]
 
 
@@ -44,7 +45,7 @@ def get_rod(island: str = Query(None), year: str = Query(None)):
 
     clause = ("WHERE " + " AND ".join(where)) if where else ""
     sql = f"""
-        SELECT row_to_json(t) - 'geom', ST_AsGeoJSON(ST_Transform(geom, 4326))
+        SELECT to_jsonb(t) - 'geom', ST_AsGeoJSON(ST_Transform(geom, 4326))
         FROM (
             SELECT id, objectid, created_date, feature_user_id, region_id,
                    host, dca, damage_type, percent_affected, collection_mode,
@@ -64,7 +65,7 @@ def get_rod(island: str = Query(None), year: str = Query(None)):
 def get_rod_bbox(minx: float, miny: float, maxx: float, maxy: float):
     """Return ROD observations that intersect the given WGS84 bounding box."""
     sql = """
-        SELECT row_to_json(t) - 'geom', ST_AsGeoJSON(ST_Transform(geom, 4326))
+        SELECT to_jsonb(t) - 'geom', ST_AsGeoJSON(ST_Transform(geom, 4326))
         FROM (
             SELECT id, objectid, island, year, damage_type, acres, geom
             FROM rod_observations
@@ -86,7 +87,7 @@ def get_rod_bbox(minx: float, miny: float, maxx: float, maxy: float):
 def get_coastline():
     """Return the full coastline / vegetation reference layer as GeoJSON."""
     sql = """
-        SELECT row_to_json(t) - 'geom', ST_AsGeoJSON(ST_Transform(geom, 4326))
+        SELECT to_jsonb(t) - 'geom', ST_AsGeoJSON(ST_Transform(geom, 4326))
         FROM (
             SELECT id, objectid, isle, sqmi, water, geom
             FROM coastline
@@ -109,13 +110,14 @@ def tiles_rod(z: int, x: int, y: int):
             SELECT
                 id, island, year, damage_type, acres,
                 ST_AsMVTGeom(
-                    ST_Transform(geom, 3857),
+                    ST_Transform(geom, 3857), -- Transform here for tile rendering
                     ST_TileEnvelope(%s, %s, %s),
                     4096, 256, true
                 ) AS mvt_geom
             FROM rod_observations
-            WHERE ST_Intersects(ST_Transform(geom, 3857), ST_TileEnvelope(%s, %s, %s))
-        ) tile
+            -- Transform the envelope to 4326 to match your 'geom' column
+            WHERE ST_Intersects(geom, ST_Transform(ST_TileEnvelope(%s, %s, %s), 4326))
+        ) tile;
     """
     with _get_conn() as conn:
         with conn.cursor() as cur:
