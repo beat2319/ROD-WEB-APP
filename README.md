@@ -2,7 +2,7 @@
 
 This is a website to host model inference of ROD detections.
 
-## [rapidohiadeath.com](https://www.rapidohiadeath.com) coming soon!
+## [rapidohiadeath.com](https://www.rapidohiadeath.com) live!
 
 - ![website](./attachments/gif/2026-04-11.gif)
 ## ROD Communication Experts:
@@ -25,4 +25,3 @@ This is a website to host model inference of ROD detections.
 - Engagement - What is your overall purpose with this.  It looks like it will provide important information, but highlighting what actions people can take may make this more engaging."
 ##### Before
 - ![before_design](./attachments/png/ROD-Web-App-CB.png)
-- ![after_design](https://www.rapidohiadeath.com/)
